@@ -87,16 +87,53 @@ class ImageController extends Controller
                 'image_id' => $image->id,
                 'user_id' => auth()->id(),
             ]);
+            session()->flash('flash', [
+                'message' => 'Image Inserted successfully.',
+                'type' => 'success',
+            ]);
 
-            return redirect()->route('images.index')->with('success', 'Image uploaded successfully');
+            return redirect()->route('images.index');
         } catch (\Exception $e) {
             Log::error('Error uploading image.', [
                 'error_message' => $e->getMessage(),
                 'user_id' => auth()->id(),
                 'stack_trace' => $e->getTraceAsString(),
             ]);
+            session()->flash('flash', [
+                'message' => 'Image Upload Failed.',
+                'type' => 'error',
+            ]);
 
-            return redirect()->route('images.create')->with('Error', 'Image uploaded failed');
+            return redirect()->route('images.create');
         }
     }
+
+    public function delete(Request $request, string $imageId)
+    {
+        $user = Auth::user();
+
+        if ($user->roles()->first()->name !== 'admin') {
+            abort(403, 'You do not have permission to delete images.');
+        }
+
+        $image = Image::find($imageId);
+
+        if (! $image) {
+            session()->flash('flash', [
+                'message' => 'Image not found!',
+                'type' => 'error',
+            ]);
+            return redirect()->route('images.index');
+        }
+
+        $image->delete();
+
+        session()->flash('flash', [
+            'message' => 'Image deleted successfully.',
+            'type' => 'success',
+        ]);
+
+        return redirect()->route('images.index');
+    }
+
 }
