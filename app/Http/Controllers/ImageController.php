@@ -99,4 +99,33 @@ class ImageController extends Controller
             return redirect()->route('images.create')->with('Error', 'Image uploaded failed');
         }
     }
+
+    public function delete(Request $request, string $imageId)
+    {
+        $user = Auth::user();
+
+        if ($user->roles()->first()->name !== 'admin') {
+            abort(403, 'You do not have permission to delete images.');
+        }
+
+        $image = Image::find($imageId);
+
+        if (! $image) {
+            session()->flash('flash', [
+                'message' => 'Image not found!',
+                'type' => 'error',
+            ]);
+            return redirect()->route('images.index');
+        }
+
+        $image->delete();
+
+        session()->flash('flash', [
+            'message' => 'Image deleted successfully.',
+            'type' => 'success',
+        ]);
+
+        return redirect()->route('images.index');
+    }
+
 }
