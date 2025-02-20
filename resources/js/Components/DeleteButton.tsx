@@ -10,6 +10,7 @@ import {
     AlertDialogDescription,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button} from '@/components/ui/button';
 
 interface DeleteButtonProps {
     imageId: number;
@@ -29,9 +30,9 @@ export default function DeleteButton({ imageId, onDelete }: DeleteButtonProps) {
             {/* Main Delete Confirmation Dialog */}
             <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded">
+                    <Button className="bg-red-500 text-white px-4 py-2 rounded" variant="destructive">
                         Delete
-                    </button>
+                    </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
