@@ -22,6 +22,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/images', [ImageController::class, 'index'])->name('images.index');
     Route::get('/admin/images/create', [ImageController::class, 'create'])->name('images.create');
+    Route::delete('/api/images/{imageId}', [ImageController::class, 'delete'])->name('images.delete');
     Route::post('/api/images', [ImageController::class, 'store'])->name('images.store');
 });
 
