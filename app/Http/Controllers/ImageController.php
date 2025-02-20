@@ -101,7 +101,7 @@ class ImageController extends Controller
             ]);
             session()->flash('flash', [
                 'message' => 'Image Upload Failed.',
-                'type' => 'success',
+                'type' => 'error',
             ]);
 
             return redirect()->route('images.create');

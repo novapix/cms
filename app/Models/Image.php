@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $url
@@ -18,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image query()
@@ -30,11 +29,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereWidth($value)
+ *
  * @mixin \Eloquent
  */
 class Image extends Model
 {
     use HasFactory;
+
+    protected $table = 'images';
 
     protected $fillable = ['name', 'url', 'alt_text', 'width', 'height', 'priority'];
 }
