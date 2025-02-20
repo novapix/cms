@@ -87,16 +87,24 @@ class ImageController extends Controller
                 'image_id' => $image->id,
                 'user_id' => auth()->id(),
             ]);
+            session()->flash('flash', [
+                'message' => 'Image Inserted successfully.',
+                'type' => 'success',
+            ]);
 
-            return redirect()->route('images.index')->with('success', 'Image uploaded successfully');
+            return redirect()->route('images.index');
         } catch (\Exception $e) {
             Log::error('Error uploading image.', [
                 'error_message' => $e->getMessage(),
                 'user_id' => auth()->id(),
                 'stack_trace' => $e->getTraceAsString(),
             ]);
+            session()->flash('flash', [
+                'message' => 'Image Upload Failed.',
+                'type' => 'success',
+            ]);
 
-            return redirect()->route('images.create')->with('Error', 'Image uploaded failed');
+            return redirect()->route('images.create');
         }
     }
 
